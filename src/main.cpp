@@ -607,7 +607,7 @@ void doScan()
       if (match.scanResult != lastMatch.scanResult) {
         Serial.println("no finger");
         mqttClient.publish((String(mqttRootTopic) + "/ring").c_str(), "off");
-		    mqttClient.publish((String(mqttRootTopic) + "/opener").c_str(), "off");
+		mqttClient.publish((String(mqttRootTopic) + "/opener").c_str(), "off");
         mqttClient.publish((String(mqttRootTopic) + "/matchId").c_str(), "-1");
         mqttClient.publish((String(mqttRootTopic) + "/matchName").c_str(), "");
         mqttClient.publish((String(mqttRootTopic) + "/matchConfidence").c_str(), "-1");
@@ -617,14 +617,14 @@ void doScan()
       notifyClients( String("Match Found: ") + match.matchId + " - " + match.matchName  + " with confidence of " + match.matchConfidence );
       if (match.scanResult != lastMatch.scanResult) {
         if (checkPairingValid()) {
-		      digitalWrite(dooropenerOutputPin, HIGH);
+		  digitalWrite(dooropenerOutputPin, HIGH);
           mqttClient.publish((String(mqttRootTopic) + "/ring").c_str(), "off");
-		      mqttClient.publish((String(mqttRootTopic) + "/opener").c_str(), "on");
+		  mqttClient.publish((String(mqttRootTopic) + "/opener").c_str(), "on");
           mqttClient.publish((String(mqttRootTopic) + "/matchId").c_str(), String(match.matchId).c_str());
           mqttClient.publish((String(mqttRootTopic) + "/matchName").c_str(), match.matchName.c_str());
           mqttClient.publish((String(mqttRootTopic) + "/matchConfidence").c_str(), String(match.matchConfidence).c_str());
           Serial.println("MQTT message sent: Open the door!");
-		      delay(3000);
+		  delay(3000);
           digitalWrite(dooropenerOutputPin, LOW);
         } else {
           notifyClients("Security issue! Match was not sent by MQTT because of invalid sensor pairing! This could potentially be an attack! If the sensor is new or has been replaced by you do a (re)pairing in settings page.");
@@ -639,7 +639,7 @@ void doScan()
           digitalWrite(doorbellOutputPin, HIGH);
         }
         mqttClient.publish((String(mqttRootTopic) + "/ring").c_str(), "on");
-		    mqttClient.publish((String(mqttRootTopic) + "/opener").c_str(), "off");
+		mqttClient.publish((String(mqttRootTopic) + "/opener").c_str(), "off");
         mqttClient.publish((String(mqttRootTopic) + "/matchId").c_str(), "-1");
         mqttClient.publish((String(mqttRootTopic) + "/matchName").c_str(), "");
         mqttClient.publish((String(mqttRootTopic) + "/matchConfidence").c_str(), "-1");
